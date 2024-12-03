@@ -12,7 +12,7 @@ Welcome to the source code for my personal portfolio website. It's a simple and 
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/username/portfolio.git
+   git clone https://github.com/InterStellarCellar/InterStellarCellar.github.io
 2. Navigate to the project directory: 
    ```bash
    cd portfolio

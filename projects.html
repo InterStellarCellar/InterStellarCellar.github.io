@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Links to Venus Baranwal's professional profiles">
-    <title>Links - Venus Baranwal</title>
+    <meta name="description" content="Projects by Venus Baranwal">
+    <title>Projects - Venus Baranwal</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <header>
@@ -18,23 +20,15 @@
             </ul>
         </nav>
     </header>
-    <section>
-        <!-- Projects Section -->
-        <section id="projects" class="fade-in">
-            <div class="container">
-                <h2>Projects</h2>
-                <div class="project-card">
-                    <h3>Portfolio Website</h3>
-                    <p>A clean and responsive portfolio website built with HTML, CSS, and JavaScript.</p>
-                    <a href="https://github.com/InterStellarCellar/InterStellarCellar.github.io">View Project</a>
-                </div>
-                <div class="project-card">
-                    <h3>Arch Packages install script</h3>
-                    <p>This script automates the installation of my personal essential packages and configurations for a new Arch Linux install.</p>
-                    <a href="https://github.com/InterStellarCellar/packages-install-script">View Project</a>
-                </div>
+
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in">
+        <div class="container">
+            <h2>Projects</h2>
+            <div id="projects-container">
+                <!-- Projects will be dynamically inserted here -->
             </div>
-        </section>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -43,5 +37,37 @@
             <p>&copy; 2024 Venus Baranwal | Software Developer</p>
         </div>
     </footer>
+
+    <script>
+        async function fetchGitHubRepos() {
+            const username = "InterStellarCellar";
+            const url = `https://api.github.com/users/${username}/repos?sort=updated`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch repositories");
+
+                const repos = await response.json();
+                const container = document.getElementById("projects-container");
+                container.innerHTML = ""; // Clear existing content
+
+                repos.forEach(repo => {
+                    const projectCard = document.createElement("div");
+                    projectCard.className = "project-card";
+                    projectCard.innerHTML = `
+                        <h3>${repo.name}</h3>
+                        <p>${repo.description || "No description available."}</p>
+                        <a href="${repo.html_url}" target="_blank">View Project</a>
+                    `;
+                    container.appendChild(projectCard);
+                });
+            } catch (error) {
+                console.error("Error fetching repositories:", error);
+            }
+        }
+
+        fetchGitHubRepos();
+    </script>
 </body>
+
 </html>
